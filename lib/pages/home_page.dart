@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:lyrics_search_app/constants.dart';
 import 'package:lyrics_search_app/widgets/artist_input_field.dart';
+import 'package:lyrics_search_app/widgets/icon_action_button.dart';
 import 'package:lyrics_search_app/widgets/search_button.dart';
 import 'package:lyrics_search_app/widgets/song_input_field.dart';
 import 'package:provider/provider.dart';
@@ -63,71 +64,65 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.history,
-              color: pink,
-            ),
+          IconActionButton(
+            icon: Icons.history,
             onPressed: () => Navigator.pushNamed(context, 'previousSearch'),
           ),
         ],
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
-        child: Container(
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Form(
-              key: _formKey,
-              child: Container(
-                height: size.height * 0.80,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.library_music,
-                      color: pink,
-                      size: size.width * 0.3,
-                    ),
-                    Column(
-                      children: [
-                        ArtistInputField(
-                          controller: _artistCtrl,
-                          onChanged: (value) {
-                            if (_loading) _loading = false;
-                          },
-                          validator: (value) =>
-                              value.isEmpty ? EMPTY_FIELD_ERROR : null,
-                        ),
-                        SizedBox(height: 20.0),
-                        SongInputText(
-                          controller: _songCtrl,
-                          onSubmitted: (_) => _search(provider),
-                          onTap: () async {
-                            await provider
-                                .getSuggestionsByArtist(_artistCtrl.text);
-                          },
-                          validator: (value) =>
-                              value.isEmpty ? EMPTY_FIELD_ERROR : null,
-                        ),
-                        SizedBox(height: 20.0),
-                        _loading
-                            ? Center(
-                                child: CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(white),
-                              ))
-                            : SearchButton(
-                                onPressed: () async => _search(provider)),
-                        SizedBox(height: 15.0),
-                      ],
-                    ),
-                    provider.songs.isEmpty
-                        ? Container()
-                        : SongTile(song: provider.songs[0]),
-                  ],
-                ),
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Form(
+            key: _formKey,
+            child: Container(
+              height: size.height * 0.80,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.library_music,
+                    color: pink,
+                    size: size.width * 0.3,
+                  ),
+                  Column(
+                    children: [
+                      ArtistInputField(
+                        controller: _artistCtrl,
+                        onChanged: (value) {
+                          if (_loading) _loading = false;
+                        },
+                        validator: (value) =>
+                            value.isEmpty ? EMPTY_FIELD_ERROR : null,
+                      ),
+                      SizedBox(height: 20.0),
+                      SongInputText(
+                        controller: _songCtrl,
+                        onSubmitted: (_) => _search(provider),
+                        onTap: () async {
+                          await provider
+                              .getSuggestionsByArtist(_artistCtrl.text);
+                        },
+                        validator: (value) =>
+                            value.isEmpty ? EMPTY_FIELD_ERROR : null,
+                      ),
+                      SizedBox(height: 20.0),
+                      _loading
+                          ? Center(
+                              child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(white),
+                            ))
+                          : SearchButton(
+                              onPressed: () async => _search(provider)),
+                      SizedBox(height: 15.0),
+                    ],
+                  ),
+                  provider.songs.isEmpty
+                      ? Container()
+                      : SongTile(song: provider.songs[0]),
+                ],
               ),
             ),
           ),

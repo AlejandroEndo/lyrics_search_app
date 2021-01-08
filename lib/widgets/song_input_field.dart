@@ -74,10 +74,10 @@ class SongInputText extends StatelessWidget {
               },
               itemBuilder: (context, suggestion) {
                 return ListTile(
-                  tileColor: gray,
+                  tileColor: white,
                   title: Text(
                     suggestion,
-                    style: TextStyle(color: white, fontSize: 15.0),
+                    style: TextStyle(color: lightGray, fontSize: 15.0),
                   ),
                 );
               },
