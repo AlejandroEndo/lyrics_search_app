@@ -16,22 +16,14 @@ class LyricsPage extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              song.title,
-              style: TextStyle(
-                color: white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              song.artist,
-              style: TextStyle(
-                color: pink,
-                fontSize: 15.0,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            // Song title
+            Text(song.title,
+                style: TextStyle(
+                    color: white, fontSize: 20.0, fontWeight: FontWeight.bold)),
+            // Song artist
+            Text(song.artist,
+                style: TextStyle(
+                    color: pink, fontSize: 15.0, fontWeight: FontWeight.w500)),
           ],
         ),
       ),
@@ -48,7 +40,7 @@ class LyricsPage extends StatelessWidget {
             vertical: 30.0,
           ),
           decoration: BoxDecoration(
-            color: lightGray,
+            color: white,
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow(
@@ -58,11 +50,12 @@ class LyricsPage extends StatelessWidget {
               ),
             ],
           ),
+          // song lyrics
           child: Text(
             song.lyrics,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: white,
+              color: lightGray,
               fontSize: 18.0,
             ),
           ),

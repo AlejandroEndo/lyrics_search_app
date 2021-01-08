@@ -23,6 +23,7 @@ class PreviousSearchPage extends StatelessWidget {
       ),
       backgroundColor: gray,
       body: ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemCount: provider.songs?.length,
         itemBuilder: (context, index) => Container(
           margin: EdgeInsets.only(top: 15.0),

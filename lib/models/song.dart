@@ -1,3 +1,4 @@
+// song model
 class Song {
   final String lyrics;
   final String artist;

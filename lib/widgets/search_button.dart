@@ -6,6 +6,7 @@ class SearchButton extends StatelessWidget {
   SearchButton({Key key, @required this.onPressed}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    // Search button.
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: size.width * 0.06),

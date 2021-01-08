@@ -21,6 +21,7 @@ class ArtistInputField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Input text title.
           Text(
             'Artist Name:',
             style: TextStyle(
@@ -30,8 +31,8 @@ class ArtistInputField extends StatelessWidget {
             ),
           ),
           SizedBox(height: 9.0),
+          // Input text field.
           Container(
-            // height: 35.0,
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
               color: white,
@@ -39,7 +40,6 @@ class ArtistInputField extends StatelessWidget {
             ),
             child: TextFormField(
               controller: controller,
-              // focusNode: _artistNode,
               onChanged: onChanged,
               validator: validator,
               textInputAction: TextInputAction.done,
@@ -47,6 +47,7 @@ class ArtistInputField extends StatelessWidget {
               decoration: InputDecoration(
                 errorStyle: TextStyle(color: red, fontSize: 12.0),
                 isDense: true,
+                // Disable all the underlines of input field.
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide.none,
                 ),
@@ -54,6 +55,9 @@ class ArtistInputField extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
                 errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                focusedErrorBorder: UnderlineInputBorder(
                   borderSide: BorderSide.none,
                 ),
               ),

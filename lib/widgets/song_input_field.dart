@@ -28,15 +28,14 @@ class SongInputText extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Input text title.
           Text(
             'Song Title:',
             style: TextStyle(
-              fontSize: 15.0,
-              color: white,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 15.0, color: white, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 9.0),
+          // Input text field with suggestions.
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
@@ -50,6 +49,7 @@ class SongInputText extends StatelessWidget {
                 decoration: InputDecoration(
                   errorStyle: TextStyle(color: red, fontSize: 12.0),
                   isDense: true,
+                  // Disable all the underlines of input field.
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
@@ -59,19 +59,24 @@ class SongInputText extends StatelessWidget {
                   errorBorder: UnderlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
+                  focusedErrorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
                 ),
-                // focusNode: _titleNode,
                 textInputAction: TextInputAction.done,
                 onSubmitted: onSubmitted,
                 onTap: onTap,
               ),
+              // Suggestions config
               suggestionsCallback: (pattern) {
                 List<String> matches = List();
+                // Calling the suggestions previously searched.
                 matches.addAll(provider.suggestions);
                 matches.retainWhere(
                     (s) => s.toLowerCase().contains(pattern.toLowerCase()));
                 return matches;
               },
+              // Suggestions builder
               itemBuilder: (context, suggestion) {
                 return ListTile(
                   tileColor: white,
