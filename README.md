@@ -17,3 +17,9 @@ item, the user must be able to tap on it to see the lyrics on a new screen.
 
 2. History: a screen listing the previously retrieved songs. The user must be able to
 tap on any song to see its lyrics on a new screen.
+
+## Run
+
+- Connect your phone with usb cable
+- with flutter previously installed on your computer, navigate to the folder where the project is.
+- Type the command flutter run.
