@@ -1,16 +1,19 @@
 # lyrics_search_app
 
-A new Flutter project.
+A lyrics search app using e https://lyricsovh.docs.apiary.io/ API
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+1. Search: a screen with a form consisting of two text inputs: ‘artist’ and ‘song title’.
+After filling both inputs and submitting, a screen containing the song lyrics must
+be presented.
+Lyrics must be retrieved from the https://lyricsovh.docs.apiary.io/ Rest API.
+An appropriate error message should be displayed if the lyrics can’t be retrieved
+for whatever reason.
+Below the search form, include a ‘Previous search’ section showing the artist and
+song title of the last lyrics that has been successfully retrieved after a search
+(only if there was a previous successful search). This section must only show 1
+item, the user must be able to tap on it to see the lyrics on a new screen.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. History: a screen listing the previously retrieved songs. The user must be able to
+tap on any song to see its lyrics on a new screen.
