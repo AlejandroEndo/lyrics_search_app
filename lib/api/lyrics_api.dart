@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:lyrics_search_app/constants.dart';
 
 class LyricsApi {
   Future<Map<String, dynamic>> getLyrics(String artist, String song) async {
@@ -11,10 +12,7 @@ class LyricsApi {
       print(result);
       return result;
     } catch (e) {
-      return {
-        'error':
-            'Something went wrong, check your internet conection and try again later.'
-      };
+      return {'error': CONECTION_ERROR};
     }
   }
 

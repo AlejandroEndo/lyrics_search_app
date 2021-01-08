@@ -2,6 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:lyrics_search_app/constants.dart';
+import 'package:lyrics_search_app/widgets/artist_input_field.dart';
+import 'package:lyrics_search_app/widgets/search_button.dart';
+import 'package:lyrics_search_app/widgets/song_input_field.dart';
 import 'package:provider/provider.dart';
 
 import 'package:lyrics_search_app/models/song.dart';
@@ -44,91 +48,88 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LyricsProvider>(context);
-
+    final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: gray,
       appBar: AppBar(
-        title: Text('Search lyrics'),
+        elevation: 1,
+        backgroundColor: lightGray,
+        title: Text(
+          'lyrics.ovh',
+          style: TextStyle(
+            color: white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
-          MaterialButton(
+          IconButton(
+            icon: Icon(
+              Icons.history,
+              color: pink,
+            ),
             onPressed: () => Navigator.pushNamed(context, 'previousSearch'),
-            child: Text('History'),
-          )
+          ),
         ],
       ),
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextFormField(
-                controller: _artistCtrl,
-                focusNode: _artistNode,
-                onChanged: (value) {
-                  if (_loading) _loading = false;
-                },
-                validator: (value) {
-                  if (value.isEmpty) return 'this field must not be empty';
-                  return null;
-                },
-                textInputAction: TextInputAction.done,
-              ),
-              TypeAheadFormField(
-                textFieldConfiguration: TextFieldConfiguration(
-                  controller: _songCtrl,
-                  decoration: InputDecoration(labelText: 'Select a User'),
-                  focusNode: _titleNode,
-                  textInputAction: TextInputAction.done,
-                  onSubmitted: (_) => _search(provider),
-                  onTap: () async {
-                    await provider.getSuggestionsByArtist(_artistCtrl.text);
-                  },
-                ),
-                suggestionsCallback: (pattern) {
-                  List<String> matches = List();
-                  matches.addAll(provider.suggestions);
-                  matches.retainWhere(
-                      (s) => s.toLowerCase().contains(pattern.toLowerCase()));
-                  return matches;
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    title: Text(suggestion),
-                  );
-                },
-                transitionBuilder: (context, suggestionsBox, controller) {
-                  return suggestionsBox;
-                },
-                onSuggestionSelected: (suggestion) {
-                  _songCtrl.text = suggestion;
-                },
-                validator: (val) =>
-                    val.isEmpty ? 'Please select a user...' : null,
-              ),
-              // TextFormField(
-              //   controller: _songCtrl,
-              //   onChanged: (value) {
-              //     if (_loading) _loading = false;
-              //   },
-              //   validator: (value) {
-              //     if (value.isEmpty) return 'this field must not be empty';
-              //     return null;
-              //   },
-              //   textInputAction: TextInputAction.done,
-              //   focusNode: _titleNode,
-              //   onFieldSubmitted: (_) async => _search(provider),
-              // ),
-              _loading
-                  ? Center(child: CircularProgressIndicator())
-                  : MaterialButton(
-                      onPressed: () async => _search(provider),
-                      child: Text('Search'),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+        child: Container(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Form(
+              key: _formKey,
+              child: Container(
+                height: size.height * 0.80,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.library_music,
+                      color: pink,
+                      size: size.width * 0.3,
                     ),
-              provider.songs.isEmpty
-                  ? Container()
-                  : SongTile(song: provider.songs[0]),
-            ],
+                    Column(
+                      children: [
+                        ArtistInputField(
+                          controller: _artistCtrl,
+                          onChanged: (value) {
+                            if (_loading) _loading = false;
+                          },
+                          validator: (value) =>
+                              value.isEmpty ? EMPTY_FIELD_ERROR : null,
+                        ),
+                        SizedBox(height: 20.0),
+                        SongInputText(
+                          controller: _songCtrl,
+                          onSubmitted: (_) => _search(provider),
+                          onTap: () async {
+                            await provider
+                                .getSuggestionsByArtist(_artistCtrl.text);
+                          },
+                          validator: (value) =>
+                              value.isEmpty ? EMPTY_FIELD_ERROR : null,
+                        ),
+                        SizedBox(height: 20.0),
+                        _loading
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(white),
+                              ))
+                            : SearchButton(
+                                onPressed: () async => _search(provider)),
+                        SizedBox(height: 15.0),
+                      ],
+                    ),
+                    provider.songs.isEmpty
+                        ? Container()
+                        : SongTile(song: provider.songs[0]),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),

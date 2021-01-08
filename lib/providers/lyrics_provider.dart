@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lyrics_search_app/api/lyrics_api.dart';
+import 'package:lyrics_search_app/constants.dart';
 import 'package:lyrics_search_app/models/song.dart';
 import 'package:lyrics_search_app/pages/lyrics_page.dart';
 import 'package:lyrics_search_app/widgets/error_result.dart';
@@ -26,8 +27,7 @@ class LyricsProvider with ChangeNotifier {
         if (result['lyrics'].isEmpty)
           return showDialog(
             context: context,
-            builder: (context) =>
-                ErrorResult(message: 'Song lyrics can\'t be found'),
+            builder: (context) => ErrorResult(message: NOT_FOUND_ERROR),
           );
 
         final newSong =

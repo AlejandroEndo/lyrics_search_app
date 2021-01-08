@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       builder: (context) => LyricsProvider(),
       child: MaterialApp(
         title: 'Lyrics search',
+        debugShowCheckedModeBanner: false,
         initialRoute: 'home',
         routes: {
           'home': (context) => HomePage(),
