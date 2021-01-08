@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lyrics_search_app/models/song.dart';
 import 'package:lyrics_search_app/providers/lyrics_provider.dart';
+import 'package:lyrics_search_app/widgets/song_tile.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,6 +24,15 @@ class _HomePageState extends State<HomePage> {
     final _songCtrl = TextEditingController();
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Search lyrics'),
+        actions: [
+          MaterialButton(
+            onPressed: () => Navigator.pushNamed(context, 'previousSearch'),
+            child: Text('History'),
+          )
+        ],
+      ),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -59,12 +69,7 @@ class _HomePageState extends State<HomePage> {
                     ),
               provider.songs.isEmpty
                   ? Container()
-                  : ListTile(
-                      title: Text(provider.songs[0].title ?? ''),
-                      subtitle: Text(provider.songs[0].artist ?? ''),
-                      onTap: () =>
-                          provider.openSong(context, provider.songs[0]),
-                    ),
+                  : SongTile(song: provider.songs[0]),
             ],
           ),
         ),
